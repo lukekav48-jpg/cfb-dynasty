@@ -117,9 +117,14 @@ The same seed with the same choices produces the same league.
 ## 2. Season and game simulation
 
 ### Schedule
-- 12 regular-season games per team: 9 against conference opponents and 3 against teams outside the conference, all within the 68-team league. Notre Dame plays 12 non-conference games.
+- 12 regular-season games per team, all within the 68-team league:
+  - SEC, Big Ten and Big 12 teams play 9 conference games and 3 non-conference games.
+  - The ACC has 17 teams, so 9 conference games each is mathematically impossible. ACC teams play 8 conference games and 4 non-conference games, as the real ACC does.
+  - Notre Dame plays 12 non-conference games.
 - Every team plays exactly 12 games, and nobody plays the same opponent twice in the regular season.
-- Each game is assigned home and away, balanced to about 6 home games per team.
+- Each game is assigned home and away, balanced to 5–7 home games per team.
+- The regular season spans 14–15 weeks, so each team gets 2–3 bye weeks. This is needed to fit every team's 12 games without anyone playing twice in a week.
+- Non-conference games are scheduled first, so they mostly fall early in the season.
 - A new schedule is generated each season.
 
 ### Rankings
@@ -356,6 +361,7 @@ The engine modules never touch the page or browser storage. All game state lives
 
 ### Save handling
 - Saves include a `version` number.
+- To keep saves under the browser's storage limit (about 5 MB), only your team's games keep the full box score. Every other game stores just the score and whether it went to overtime.
 - If a save fails to parse, is missing required fields, or has an unknown version, the game doesn't crash. It shows a message offering to import a backup or start a new franchise.
 - The broken save is kept under a backup key rather than deleted.
 - If browser storage is unavailable (for example in a private window), the game runs without saving and shows a banner.
