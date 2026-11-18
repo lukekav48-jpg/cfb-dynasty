@@ -3,10 +3,16 @@ import { loadFromStorage, saveToStorage } from './save.js';
 import { h, luminance, readableAccent } from './ui/dom.js';
 import { renderNewFranchise } from './ui/newFranchise.js';
 import { renderHome } from './ui/home.js';
+import { renderRoster } from './ui/roster.js';
+import { renderDepth } from './ui/depth.js';
+import { renderPlan } from './ui/plan.js';
 import { renderSettings } from './ui/settings.js';
 
 const ROUTES = {
   home: { label: 'Home', render: renderHome },
+  roster: { label: 'Roster', render: renderRoster },
+  depth: { label: 'Depth Chart', render: renderDepth },
+  plan: { label: 'Game Plan', render: renderPlan },
   settings: { label: 'Settings', render: renderSettings },
 };
 
