@@ -28,7 +28,7 @@ Plans 2 and 3 are written after Plan 1 is built, so they can follow the real cod
 - Rosters never exceed 85 players (`ROSTER_MAX`).
 - Saves carry `version: 1` (`SAVE_VERSION`). Only the user's games keep full box scores, so saves stay small.
 - The test command is `./test.sh [filter]`. It passes when the last line ends in `0 failed`.
-- To check the screens locally, run `python3 -I -m http.server 8765 --bind 127.0.0.1` from the repository root and open http://127.0.0.1:8765/.
+- To check the screens locally, run `python3 -I -m http.server 8765 --bind 127.0.0.1` from the repository root and open http://127.0.0.1:8765/. Python's server lets the browser cache files, so after changing code do a full reload (not just a `#` route change), or the old modules keep running.
 - Commit messages end with: `Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>`
 - Publishing to GitHub (Task 13) happens only after the user explicitly says yes.
 
@@ -2789,7 +2789,8 @@ h1 { font-size: 26px; margin: 4px 0 12px; }
 h2 { font-size: 18px; margin: 0 0 10px; }
 h3 { font-size: 15px; margin: 0 0 8px; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; }
 .muted { color: var(--muted); }
-.grid { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+.grid { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr)); }
+.grid > * { min-width: 0; }
 .card { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 14px; }
 .row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
 .spacer { flex: 1; }
@@ -3928,6 +3929,9 @@ export function renderSchedule(ctx) {
         { class: 'card' },
         h('h3', {}, s.teams[us].name),
         h(
+          'div',
+          { class: 'table-wrap' },
+          h(
           'table',
           {},
           h(
@@ -3944,6 +3948,7 @@ export function renderSchedule(ctx) {
               }
               return h('tr', { class: g.result ? 'clickable' : '', onclick: () => g.result && modal(boxScore(s, g)) }, h('td', {}, `Wk ${g.week}`), h('td', {}, `${g.neutral ? 'vs' : home ? 'vs' : '@'} ${teamLabel(s, opp)}`), h('td', { class: 'muted' }, g.label || ''), h('td', {}, res));
             }),
+          ),
           ),
         ),
         h('p', { class: 'muted' }, 'Weeks not listed are byes. Click a result for the box score.'),
@@ -4052,7 +4057,7 @@ Or open http://127.0.0.1:8765/tests/tests.html in a browser.
 4. **Postseason:** keep going through "Playoff first round and bowls", the quarterfinals, semifinals and national championship. If you're eliminated, Home says your season is over and **Sim this round** keeps the postseason going.
 5. **Season complete:** the Home card names the national champion. Rankings lists the 12 playoff seeds.
 6. **Record:** your record on Home equals the number of games in your Schedule tab.
-7. **Phone width:** resize the window to about 390px wide. There's no sideways scrolling on Home, Roster (the table scrolls inside its card), the game screen, or Settings.
+7. **Phone width:** load the game in a 390px-wide window (or an iframe of that width). No screen scrolls sideways; wide tables scroll inside their cards. The CSS rule `.grid > * { min-width: 0; }` keeps grid cards from stretching to fit a wide table.
 8. Run `./test.sh`, which must end with `0 failed`, and confirm the browser console shows no errors.
 
 - [ ] **Step 5: Commit**

@@ -3,6 +3,8 @@ import { loadFromStorage, saveToStorage } from './save.js';
 import { h, luminance, readableAccent } from './ui/dom.js';
 import { renderNewFranchise } from './ui/newFranchise.js';
 import { renderHome } from './ui/home.js';
+import { renderSchedule } from './ui/schedule.js';
+import { renderRankings } from './ui/rankings.js';
 import { renderGame } from './ui/game.js';
 import { renderRoster } from './ui/roster.js';
 import { renderDepth } from './ui/depth.js';
@@ -14,6 +16,8 @@ const ROUTES = {
   roster: { label: 'Roster', render: renderRoster },
   depth: { label: 'Depth Chart', render: renderDepth },
   plan: { label: 'Game Plan', render: renderPlan },
+  schedule: { label: 'Schedule', render: renderSchedule },
+  rankings: { label: 'Rankings', render: renderRankings },
   settings: { label: 'Settings', render: renderSettings },
   game: { label: 'Game', render: renderGame, hidden: true },
 };
